@@ -1,5 +1,5 @@
 #include "main.h"
-
+#include <limits.h>
 /**
  * _printf - Custom implementation of printf that supports %c, %s, and %%
  * @format: A string containing format specifiers
