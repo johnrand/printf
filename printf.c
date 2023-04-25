@@ -1,11 +1,12 @@
 #include "main.h"
-#include <limits.h>
+
 /**
  * _printf - Custom implementation of printf that supports %c, %s, and %%
  * @format: A string containing format specifiers
  *
  * Return: The number of characters printed (excluding the null byte)
  */
+
 int _printf(const char *format, ...)
 {
 	va_list args;
