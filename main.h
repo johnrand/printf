@@ -28,7 +28,7 @@ struct fmt
 {
 	char fmt;
 
-	int(*fn)(va_list, char[], int, int, int, int);
+	int (*fn)(va_list, char[], int, int, int, int);
 };
 
 /**
@@ -37,7 +37,7 @@ struct fmt
  * @fmt_t: the associated function
  */
 typedef struct fmt fmt_t;
-int_printf(const char *format, ...);
+int printf(const char *format, ...);
 int handle_print(const char *fmt, int *i,
 		va_list list, char buffer[], int flags, int width, int precision, int size);
 
@@ -93,12 +93,12 @@ int handle_write_char(char c, char buffer[],
 		int flags, int width, int precision, int size);
 int write_number(int is_positive, int ind, char buffer[],
 		int flags, int width, int precision, int size);
-int wrote_num(int ind, char bff[], int flags, nt width, int precision,
+int wrote_num(int ind, char bff[], int flags, int width, int precision,
 		int length, char padd, char extra_c);
 int write_pointer(char buffer[], int ind, int length,
 		int width, int flags, char padd, char extra_c, int padd_start);
 
-int write_unsigned(int is_negative, int ind, char buffer[].
+int write_unsigned(int is_negative, int ind, char buffer[],
 		int flags, int width, int precision, int size);
 
 /* Utils */
