@@ -11,44 +11,54 @@ int _printf(const char *format, ...)
 {
 	va_list args;
 	int count = 0;
-	char c;
-	char *s;
 
 	va_start(args, format);
 
-	while (*format != '\0')
+	while (*format)
 	{
 		if (*format == '%')
 		{
 			format++;
-			switch (*format)
+
+			if (*format == 'c')
 			{
-			case 'c':
-				c = (char)va_arg(args, int);
-				count += _putchar(c);
-				break;
-			case 's':
-				s = va_arg(args, char *);
-				while (*s != '\0')
+				char c = va_arg(args, int);
+
+				_putchar(c);
+
+				count++;
+			}
+			else if (*format == 's')
+			{
+				char *s = va_arg(args, char *);
+
+				while (*s)
 				{
-					count += _putchar(*s);
+					_putchar(*s);
 					s++;
+
+					count++;
 				}
-				break;
-			case '%':
-				count += _putchar('%');
-				break;
-			default:
-				/* Unsupported format specifier, ignore it */
-				break;
+			}
+			else if (*format == '%')
+			{
+				_putchar('%');
+				count++;
+			}
+			else
+			{
+				/* unknown conversion specifier, ignore */
 			}
 		}
 		else
 		{
-			count += _putchar(*format);
+			_putchar(*format);
+			count++;
 		}
+
 		format++;
 	}
+
 	va_end(args);
 	return (count);
 }
