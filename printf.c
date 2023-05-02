@@ -1,66 +1,60 @@
 #include "main.h"
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 /**
- * _printf - Custom implementation of printf that supports %c, %s, and %%
- * @format: A string containing format specifiers
+ * _printf - produces output according to a format
  *
- * Return: The number of characters printed (excluding the null byte)
+ * @format: the format string
+ * Return: the number of characters printed
+ * (excluding the null byte used to end output to strings)
  */
 
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int count = 0;
+	int i, count = 0;
+	char *s;
 
 	va_start(args, format);
 
-	while (*format)
+	for (i = 0; format[i] != '\0'; i++)
 	{
-		if (*format == '%')
+		if (format[i] == '%')
 		{
-			format++;
-
-			if (*format == 'c')
+			i++;
+			switch (format[i])
 			{
-				char c = va_arg(args, int);
-
-				_putchar(c);
-
-				count++;
-			}
-			else if (*format == 's')
-			{
-				char *s = va_arg(args, char *);
-
-				while (*s)
-				{
-					_putchar(*s);
-					s++;
-
-					count++;
-				}
-			}
-			else if (*format == '%')
-			{
-				_putchar('%');
-				count++;
-			}
-			else
-			{
-				/* unknown conversion specifier, ignore */
+				case 'c':
+					count += _putchar(va_arg(args, int));
+					break;
+				case 's':
+					s = va_arg(args, char *);
+					if (s == NULL)
+						s = "(null)";
+					while (*s != '\0')
+					{
+						count += _putchar(*s);
+						s++;
+					}
+					break;
+				case '%':
+					count += _putchar('%');
+					break;
+				default:
+					count += _putchar('%');
+					count += _putchar(format[i]);
+					break;
 			}
 		}
 		else
 		{
-			_putchar(*format);
-			count++;
+			count += _putchar(format[i]);
 		}
-
-		format++;
 	}
 
 	va_end(args);
+
 	return (count);
 }
