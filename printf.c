@@ -29,14 +29,14 @@ int _printf(const char *format, ...)
 					count += _putchar(va_arg(args, int));
 					break;
 				case 's':
-					count += _printf("%s", va_arg(args, char *));
+					count += printf("%s", va_arg(args, char *));
 					break;
 				case '%':
 					count += _putchar('%');
 					break;
 				case 'd':
 				case 'i':
-					count += _printf("%d", va_arg(args, int));
+					count += printf("%d", va_arg(args, int));
 					break;
 				default:
 					count += _putchar('%');
