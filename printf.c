@@ -1,62 +1,54 @@
 #include "main.h"
 #include <stdarg.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib>
 
 /**
  * _printf - produces output according to a format
+ * @format: character string containing zero or more directives
  *
- * @format: the format string
- * Return: the number of characters printed
+ * Return: number of characters printed
  * (excluding the null byte used to end output to strings)
  */
 
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int i, count = 0;
-	char *s;
-
-	if (format == NULL)
-	{
-		return (0);
-	}
+	int count = 0;
 
 	va_start(args, format);
 
-	for (i = 0; format[i] != '\0'; i++)
+	while (*format != '\0')
 	{
-		if (format[i] == '%')
+		if (*format == '%')
 		{
-			i++;
-			switch (format[i])
+			format++;
+			switch (*format)
 			{
 				case 'c':
 					count += _putchar(va_arg(args, int));
 					break;
 				case 's':
-					s = va_arg(args, char *);
-					if (s == NULL)
-						s = "(null)";
-					while (*s != '\0')
-					{
-						count += _putchar(*s);
-						s++;
-					}
+					count += printf("%s", va_arg(args, char *));
 					break;
 				case '%':
 					count += _putchar('%');
 					break;
+				case 'd':
+				case 'i':
+					count += printf("%d", va_arg(args, int));
+					break;
 				default:
 					count += _putchar('%');
-					count += _putchar(format[i]);
+					count += _putchar(*format);
 					break;
 			}
 		}
 		else
 		{
-			count += _putchar(format[i]);
+			count += _putchar(*format);
 		}
+		format++;
 	}
 
 	va_end(args);
