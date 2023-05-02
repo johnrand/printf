@@ -27,19 +27,38 @@ int print_binary(unsigned int n)
 }
 
 /**
- * handle_binary - Handle the "b" custom conversion specifier
- * @args: The va_list containing the next argument
- * @fmt: The format string
- * @count: A pointer to the character count
+ * handle_binary - converts an unsigned int to binary and prints it
+ * @args: argument list containing the unsigned int to convert
+ * @fmt: format string that specifies the conversion specifier
+ * @count: pointer to count of characters printed so far
  *
- * Return: The number of characters printed
+ * Return: number of characters printed
  */
-
 int handle_binary(va_list args, const char *fmt, int *count)
 {
-    unsigned int n = va_arg(args, unsigned int);
+	unsigned int num = va_arg(args, unsigned int);
+	char binary[32];
+	int i, len = 0;
 
-    return (print_binary(n));
+	(void)fmt;
+
+	if (num == 0)
+	{
+		*count += _putchar('0');
+		return (1);
+	}
+
+	for (i = 0; num > 0; i++)
+	{
+		binary[i] = (num % 2) + '0';
+		num /= 2;
+		len++;
+	}
+
+	for (i = len - 1; i >= 0; i--)
+		*count += _putchar(binary[i]);
+
+	return (len);
 }
 
 /**
