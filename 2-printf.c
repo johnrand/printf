@@ -1,6 +1,21 @@
 #include "main.h"
 
 /**
+ * print_uint_helper - helper function to print an unsigned integer
+ * @buffer: buffer to store the output
+ * @num: the unsigned integer to print
+ * @base: the base to use for conversion
+ * @width: the minimum field width
+ * @size: the maximum number of digits to print
+ *
+ * Return: the number of characters printed
+ */
+
+int print_uint_helper(char buffer[], unsigned int num, char *base,
+                      int width, int size);
+
+
+/**
  * print_binary - Converts an unsigned int argument to binary
  * @types: A va_list containing the arguments to print
  * @buffer: A buffer to store the printed string
