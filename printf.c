@@ -17,6 +17,11 @@ int _printf(const char *format, ...)
 	int i, count = 0;
 	char *s;
 
+	if (format == NULL)
+	{
+		return (0);
+	}
+
 	va_start(args, format);
 
 	for (i = 0; format[i] != '\0'; i++)
