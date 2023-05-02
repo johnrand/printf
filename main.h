@@ -115,4 +115,8 @@ int _putchar(char c);
 
 int _printf(const char *format, ...);
 
+int print_binary(unsigned int n);
+
+int handle_binary(va_list args, const char *fmt, int *count);
+
 #endif /* MAIN_H */

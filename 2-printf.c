@@ -1,46 +1,86 @@
 #include "main.h"
 
 /**
- * print_uint_helper - helper function to print an unsigned integer
- * @buffer: buffer to store the output
- * @num: the unsigned integer to print
- * @base: the base to use for conversion
- * @width: the minimum field width
- * @size: the maximum number of digits to print
+ * print_binary - Print an unsigned int in binary format
+ * @n: The unsigned int to print in binary format
  *
- * Return: the number of characters printed
+ * Return: The number of characters printed
  */
 
-int print_uint_helper(char buffer[], unsigned int num, char *base,
-                      int width, int size);
+int print_binary(unsigned int n)
+{
+    int count = 0;
+    unsigned int mask = 1;
 
+    /* Count the number of bits needed to represent the number */
+    while ((mask << 1) <= n)
+        mask <<= 1;
+
+    /* Print the binary representation of the number */
+    while (mask > 0) {
+        _putchar((n & mask) ? '1' : '0');
+        mask >>= 1;
+        count++;
+    }
+
+    return (count);
+}
 
 /**
- * print_binary - Converts an unsigned int argument to binary
- * @types: A va_list containing the arguments to print
- * @buffer: A buffer to store the printed string
- * @flags: Flags used to modify the output
- * @width: Minimum width of the printed string
- * @precision: Precision of the printed string
- * @size: Maximum number of bytes to be written in buffer
+ * handle_binary - Handle the "b" custom conversion specifier
+ * @args: The va_list containing the next argument
+ * @fmt: The format string
+ * @count: A pointer to the character count
  *
- * Return: The number of bytes written in buffer.
+ * Return: The number of characters printed
  */
 
-int print_binary(va_list types, char buffer[],
-                __attribute__((unused))int flags, int width,
-                __attribute__((unused))int precision, int size)
+int handle_binary(va_list args, const char *fmt, int *count)
 {
-	unsigned int num = va_arg(types, unsigned int);
-	unsigned int bin = 0, rem, i = 1;
+    unsigned int n = va_arg(args, unsigned int);
 
-	while (num != 0)
-	{
-		rem = num % 2;
-		num /= 2;
-		bin += rem * i;
-		i *= 10;
-	}
+    return (print_binary(n));
+}
 
-	return (print_uint_helper(buffer, bin, "01", width, size));
+/**
+ * _printf - Custom printf function that handles some custom conversion specifiers
+ * @format: The format string
+ * @...: The variable arguments list
+ *
+ * Return: The number of characters printed
+ */
+
+int _printf(const char *format, ...)
+{
+    va_list args;
+    int count = 0;
+
+    va_start(args, format);
+
+    while (*format != '\0') {
+        if (*format == '%') {
+            format++;
+            switch (*format) {
+                case 'b':
+                    count += handle_binary(args, format, &count);
+                    break;
+                default:
+                    _putchar('%');
+                    count++;
+                    if (*format != '%') {
+                        _putchar(*format);
+                        count++;
+                    }
+                    break;
+            }
+        } else {
+            _putchar(*format);
+            count++;
+        }
+        format++;
+    }
+
+    va_end(args);
+
+    return (count);
 }
